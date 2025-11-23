@@ -1,0 +1,435 @@
+================================================================================
+                    FIRE DETECTION AND ALERT SYSTEM
+                          USER MANUAL
+================================================================================
+
+VERSION: 1.2.0
+LAST UPDATED: 11/24/2025
+
+================================================================================
+                            TABLE OF CONTENTS
+================================================================================
+
+1. INTRODUCTION
+2. GETTING STARTED
+3. HOW TO USE
+4. VOICE COMMANDS
+5. UNDERSTANDING ALERTS
+6. MAINTENANCE
+7. TROUBLESHOOTING
+8. SAFETY INFORMATION
+9. CONTACT SUPPORT
+
+================================================================================
+                            1. INTRODUCTION
+================================================================================
+
+Thank you for choosing the Fire Detection and Alert System!
+
+WHAT THIS SYSTEM DOES:
+• Detects fire and smoke 24/7
+• Sends SMS alerts to your phone
+• Makes emergency calls automatically
+• Controls fan and light with voice commands
+• Sounds alarm and flashes warning lights
+
+ IMPORTANT SAFETY NOTE:
+This device is a BACKUP system. Always install proper smoke detectors as 
+your main fire protection. Do not rely on this device alone.
+
+WHAT'S IN THE BOX:
+- Fire detection system (assembled on breadboard)
+- Power adapter (5V, 2A)
+- This user manual
+- SD card (already installed)
+- SIM card slot (insert your own SIM)
+
+================================================================================
+                         2. GETTING STARTED
+================================================================================
+
+STEP 1: CHOOSE A LOCATION
+• Mount on wall or place on stable surface
+• Central location in room
+• Away from windows and vents
+• Within phone signal range
+
+STEP 2: INSERT SIM CARD
+1. Turn OFF the system
+2. Find the SIM800L module (has antenna)
+3. Insert active SIM card with SMS/call capability
+4. Make sure SIM PIN is DISABLED
+
+   How to disable PIN:
+   - Put SIM in your phone first
+   - Go to Settings → Security → SIM Lock
+   - Turn OFF PIN lock
+   - Then insert into system
+
+STEP 3: CONNECT POWER
+1. Plug power adapter into outlet
+2. Connect to Arduino
+3. Wait 60 seconds for startup
+
+STARTUP SEQUENCE (takes 60 seconds):
+• 0-5 sec: Servo motor moves
+• 5-15 sec: Speaker beeps
+• 15-30 sec: SIM800L connects (watch for blinking light)
+• 30-60 sec: Sensors warm up
+• After 60 sec: GREEN LED turns ON = Ready!
+
+✓ SYSTEM READY when GREEN LED is solid ON
+
+================================================================================
+                            3. HOW TO USE
+================================================================================
+
+NORMAL OPERATION:
+When running normally, you'll see:
+• GREEN LED: ON (system ready)
+• Servo motor: Moving left and right slowly
+• No buzzer sound
+• Everything else: OFF
+
+The system works automatically. Just leave it running!
+
+
+
+FIRE DETECTED:
+What happens:
+1. YELLOW LED flashes
+2. Buzzer sounds (loud beeping)
+3. Servo stops and points at fire
+4. Speaker says "FIRE DETECTED!"
+5. SMS sent to emergency contacts
+6. Automated call made
+
+What YOU do:
+1. Check if real fire
+2. If YES: Evacuate and call fire department!
+3. If NO (false alarm): Remove source and wait
+4. System resets after 50 seconds
+
+
+
+SMOKE/GAS DETECTED:
+What happens:
+1. RED LED flashes
+2. Buzzer sounds
+3. Servo keeps scanning
+4. Speaker says "SMOKE DETECTED!"
+5. SMS sent to contacts
+
+What YOU do:
+1. Open windows for ventilation
+2. Check for gas leaks (smell)
+3. Look for smoke source
+4. If gas leak: DON'T use light switches! Evacuate!
+5. System resets after 50 seconds
+
+
+
+AUTO-RESET:
+• After 50 seconds, alarm stops if danger is gone
+• System returns to normal monitoring
+• If danger still there, alarm continues
+
+MANUAL RESET:
+• Unplug power
+• Wait 5 seconds
+• Plug back in
+• Wait 60 seconds for startup
+
+================================================================================
+                         4. VOICE COMMANDS
+================================================================================
+
+AVAILABLE COMMANDS:
+
+Fan Control:
+• "Turn on fan" → Fan starts
+• "Turn off fan" → Fan stops
+• "Fan on" → Fan starts
+• "Fan off" → Fan stops
+• "Level 1" → Fan level 1
+• "Level 2" → Fan level 2
+• "Level 3" → Fan level 3
+
+
+Light Control:
+• "Turn on light" → Light turns on
+• "Turn off light" → Light turns off
+• "Light on" → Light turns on
+• "Light off" → Light turns off
+
+HOW TO USE:
+1. Stand 1-2 meters away
+2. Speak clearly in normal voice (don't shout!)
+3. Say exact command
+4. Wait 1-2 seconds
+5. Check if device responded
+
+TIPS:
+- Speak clearly
+- Use quiet environment
+- Wait between commands
+- Use exact phrases
+
+- Don't shout
+- Don't speak too fast
+- Don't expect instant response (1-2 sec delay is normal)
+
+================================================================================
+                        5. UNDERSTANDING ALERTS
+================================================================================
+
+LED INDICATORS:
+
+GREEN LED:
+• ON = System working normally
+• OFF = System not ready or error
+
+YELLOW LED:
+• Flashing = FIRE ALERT!
+
+RED LED:
+• Flashing = SMOKE/GAS ALERT!
+
+
+
+SMS ALERTS:
+You will receive text messages like:
+
+"FIRE ALERT!
+Fire detected at [Your Location]
+Time: 14:30:25
+Call emergency services immediately!"
+
+When you get SMS:
+1. Read immediately
+2. Call location to verify
+3. If real emergency: Call fire department
+4. If unsure: Better safe than sorry - call emergency services
+
+
+VOICE CALLS:
+• Only for FIRE detection (not smoke)
+• Automated message plays when you answer
+• Message: "Emergency alert! Fire detected..."
+• Call ends after 30 seconds
+
+
+
+SOUNDS:
+• Continuous loud beeping = Active alert
+• Voice message = Description of alert
+• Single beep = System startup done
+• Quiet = Normal operation
+
+================================================================================
+                           6. MAINTENANCE
+================================================================================
+
+DAILY (2 minutes):
+- Check GREEN LED is ON
+- Make sure servo is moving
+- Check all wires connected
+- No visible damage
+
+WEEKLY (15 minutes):
+- Test with lighter (hold 20cm from flame sensor)
+- Test with alcohol spray (near smoke sensor)
+- Check you receive SMS
+- Test voice commands
+- Write down test date
+
+MONTHLY (30 minutes):
+- Clean sensors with soft brush
+- Dust off breadboard
+- Check all connections tight
+- Test emergency call function
+- Replace SD card if needed
+
+CLEANING:
+1. Turn OFF power first!
+2. Use soft brush or compressed air
+3. Don't use water or liquids
+4. Don't touch sensor elements directly
+5. Let dry completely before turning on
+
+================================================================================
+                         7. TROUBLESHOOTING
+================================================================================
+
+PROBLEM: Green LED not turning ON
+SOLUTION:
+• Check power cable connected
+• Check power outlet working
+• Wait full 60 seconds after startup
+• Try different power outlet
+
+
+
+PROBLEM: No SMS received
+SOLUTION:
+• Check SIM card inserted correctly
+• Check SIM has credit/service
+• Check SIM PIN is disabled
+• Check phone number is correct in settings
+• Test by calling SIM card number
+
+
+
+PROBLEM: No sound from speaker
+SOLUTION:
+ Check SD card inserted
+ Check speaker wires connected
+ Try different SD card
+
+
+
+PROBLEM: Voice commands not working
+SOLUTION:
+• Speak more clearly
+• Reduce background noise
+• Stand closer (1-2 meters)
+• Use exact command phrases
+• Check VC-02 has power
+
+
+
+PROBLEM: False fire alarms
+SOLUTION:
+• Keep candles/lighters away
+• Avoid direct sunlight on sensor
+• Don't point at heat sources
+• Clean flame sensor lens
+
+
+
+PROBLEM: False smoke alarms
+SOLUTION:
+• Don't use aerosol sprays nearby
+• Keep away from cooking area
+• Clean MQ2 sensor
+• Ensure good ventilation
+• Wait 24 hours for new sensor to stabilize
+
+
+
+PROBLEM: Servo not moving
+SOLUTION:
+• Check power supply adequate (2A minimum)
+• Check servo wire connected to Pin 9
+• Restart system
+• Replace servo if damaged
+
+
+
+STILL HAVING PROBLEMS?
+Contact technical support (see Section 9)
+
+================================================================================
+                        8. SAFETY INFORMATION
+================================================================================
+
+ CRITICAL WARNINGS:
+
+DO NOT:
+- Use as your only fire protection system
+- Expose to water or moisture
+- Cover sensors or block airflow
+- Use damaged power cables
+- Attempt repairs while powered on
+- Ignore alerts - always investigate
+- Rely only on SMS (network may fail)
+
+ALWAYS:
+- Install certified smoke detectors too
+- Test system weekly
+- Keep emergency numbers ready
+- Ensure phone has signal
+- Maintain system regularly
+- Replace sensors if damaged
+- Keep area around sensors clear
+
+LIMITATIONS:
+• Sensors have limited range (~5 meters)
+• Requires power and phone signal
+• Not suitable for extreme heat/cold
+• Not waterproof
+• SMS may be delayed in emergency
+
+IN CASE OF EMERGENCY:
+1. Evacuate immediately if fire confirmed
+2. Call emergency services: [Your local number]
+3. Don't fight large fires yourself
+4. Close doors to contain fire
+5. Never go back inside burning building
+
+FIRE SAFETY TIPS:
+• Have fire extinguisher nearby
+• Know your escape routes
+• Practice fire drills
+• Keep emergency contacts on phone
+• Teach family about fire safety
+
+================================================================================
+                          9. CONTACT SUPPORT
+================================================================================
+
+TECHNICAL SUPPORT:
+
+For help with:
+• Setup problems
+• System errors
+• Changing settings
+• Voice command training
+• Replacement parts
+
+Contact Information:
+Email: justinegamo05@gmail.com
+Phone: 0936-294-8041
+
+
+Hours: Monday-Friday, 9AM-5PM
+
+
+
+
+WARRANTY:
+
+This product comes with 6 months warranty covering:
+• Manufacturing defects
+• Component failures (normal use)
+
+NOT covered:
+• Physical damage
+• Water damage
+• Misuse or improper installation
+• Normal wear and tear
+
+For warranty claims, contact support with:
+• Purchase date
+• Serial number (if applicable)
+• Description of problem
+• Photos of issue
+
+
+
+SYSTEM INFORMATION:
+
+Your System Details:
+• Model: Fire Detection System v1.2
+
+
+
+
+
+================================================================================
+
+                    THANK YOU FOR YOUR PURCHASE!
+
+           Stay safe and test your system regularly!
+
+================================================================================

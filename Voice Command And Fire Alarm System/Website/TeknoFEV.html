@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TekNO-FEV-C25 </title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(34, 211, 238, 0.3), inset 0 0 10px rgba(34, 211, 238, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(34, 211, 238, 0.6), inset 0 0 15px rgba(34, 211, 238, 0.2);
+            }
+        }
+        @keyframes shimmer {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.05) rotate(1deg); }
+        }
+        .animate-slideInUp {
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+        .team-card {
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+        .team-card:nth-child(1) { animation-delay: 0.1s; }
+        .team-card:nth-child(2) { animation-delay: 0.2s; }
+        .team-card:nth-child(3) { animation-delay: 0.3s; }
+        .team-card:nth-child(4) { animation-delay: 0.4s; }
+        .team-card:nth-child(5) { animation-delay: 0.5s; }
+        .team-card:nth-child(6) { animation-delay: 0.6s; }
+        .team-img-wrapper {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .team-card:hover .team-img-wrapper {
+            animation: shimmer 0.6s ease-in-out;
+        }
+        .team-img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(34, 211, 238, 0.1) 50%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .team-card:hover .team-img-wrapper::after {
+            opacity: 1;
+        }
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(34, 211, 238, 0.2), 0 0 20px rgba(34, 211, 238, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Lucide Icons as SVG components
+        const Mic = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" x2="12" y1="19" y2="22"></line>
+            </svg>
+        );
+
+        const Flame = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+            </svg>
+        );
+
+        const Bell = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+            </svg>
+        );
+
+        const Smartphone = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                <path d="M12 18h.01"></path>
+            </svg>
+        );
+
+        const Zap = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+        );
+
+        const Shield = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+        );
+
+        const Users = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+        );
+
+        const ChevronDown = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        );
+
+        function TeknoFevWebsite() {
+            const scrollToSection = (sectionId) => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+                    <nav className="fixed top-0 w-full bg-slate-900/95 backdrop-blur-sm z-50 border-b border-blue-500/20">
+                        <div className="max-w-7xl mx-auto px-6 py-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                                        <Zap size={24} className="text-white" />
+                                    </div>
+                                    <span className="text-2xl font-bold text-white">TekNO-FEV-C25</span>
+                                </div>
+                                <div className="hidden md:flex space-x-8">
+                                    <button onClick={() => scrollToSection('home')} className="text-gray-300 hover:text-cyan-400 transition-colors">Home</button>
+                                    <button onClick={() => scrollToSection('features')} className="text-gray-300 hover:text-cyan-400 transition-colors">Features</button>
+                                    <button onClick={() => scrollToSection('about')} className="text-gray-300 hover:text-cyan-400 transition-colors">About</button>
+                                    <button onClick={() => scrollToSection('team')} className="text-gray-300 hover:text-cyan-400 transition-colors">Team</button>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <section id="home" className="pt-32 pb-20 px-6">
+                        <div className="max-w-7xl mx-auto text-center">
+                            
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                                TekNO-FEV-C25
+                            </h1>
+                            <p className="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
+                                Automatic Voice Command for Hands-Free Appliance Control
+                            </p>
+                            <p className="text-lg md:text-xl text-cyan-400 mb-12 max-w-3xl mx-auto">
+                                Integrated Fire Alarm System with SMS & Audio Call Alerts
+                            </p>
+                            <div className="flex flex-wrap justify-center gap-4">
+                                <button onClick={() => scrollToSection('features')} className="px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-400 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all">
+                                    Explore Features
+                                </button>
+                                <button onClick={() => scrollToSection('team')} className="px-8 py-4 bg-slate-800 text-white rounded-lg font-semibold border border-blue-500/30 hover:border-cyan-400 transition-all">
+                                    Meet the Team
+                                </button>
+                            </div>
+                            <div className="mt-16 animate-bounce">
+                                <ChevronDown size={32} className="mx-auto text-cyan-400" />
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="features" className="py-20 px-6 bg-slate-900/50">
+                        <div className="max-w-7xl mx-auto">
+                            <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
+                                Key Features
+                            </h2>
+                            <p className="text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+                                Advanced technology combining voice control and fire safety in one intelligent system
+                            </p>
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-blue-500/20 hover:border-cyan-400/40 transition-all">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center mb-6">
+                                        <Mic size={32} className="text-white" />
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-white mb-4">Voice Command Control</h3>
+                                    <p className="text-gray-300 mb-6">
+                                        Control your home appliances hands-free using advanced voice recognition technology. Simply speak commands to turn devices on or off.
+                                    </p>
+                                    <ul className="space-y-3">
+                                        <li className="flex items-start space-x-3">
+                                            <Zap size={20} className="text-cyan-400 mt-1 flex-shrink-0" />
+                                            <span className="text-gray-300">Instant voice recognition</span>
+                                        </li>
+                                        <li className="flex items-start space-x-3">
+                                            <Zap size={20} className="text-cyan-400 mt-1 flex-shrink-0" />
+                                            <span className="text-gray-300">Multiple appliance support</span>
+                                        </li>
+                                        <li className="flex items-start space-x-3">
+                                            <Zap size={20} className="text-cyan-400 mt-1 flex-shrink-0" />
+                                            <span className="text-gray-300">Hands-free operation</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl border border-blue-500/20 hover:border-cyan-400/40 transition-all">
+                                    <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-6">
+                                        <Flame size={32} className="text-white" />
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-white mb-4">Fire Alarm System</h3>
+                                    <p className="text-gray-300 mb-6">
+                                        Advanced fire detection with immediate SMS and audio call notifications to ensure rapid response and maximum safety.
+                                    </p>
+                                    <ul className="space-y-3">
+                                        <li className="flex items-start space-x-3">
+                                            <Bell size={20} className="text-orange-400 mt-1 flex-shrink-0" />
+                                            <span className="text-gray-300">Real-time fire detection</span>
+                                        </li>
+                                        <li className="flex items-start space-x-3">
+                                            <Smartphone size={20} className="text-orange-400 mt-1 flex-shrink-0" />
+                                            <span className="text-gray-300">Instant SMS alerts</span>
+                                        </li>
+                                        <li className="flex items-start space-x-3">
+                                            <Smartphone size={20} className="text-orange-400 mt-1 flex-shrink-0" />
+                                            <span className="text-gray-300">Automated audio call notifications</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="about" className="py-20 px-6">
+                        <div className="max-w-5xl mx-auto">
+                            <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-10 rounded-2xl border border-blue-500/20">
+                                <div className="flex items-center space-x-4 mb-6">
+                                    <Shield size={40} className="text-cyan-400" />
+                                    <h2 className="text-4xl font-bold text-white">About the Project</h2>
+                                </div>
+                                <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                                    TekNO-FEV-C25 is a groundbreaking capstone project that merges smart home automation with life-saving fire detection technologies.
+                                </p>
+                                <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                                    The system allows users to control appliances hands-free using voice commands, while the fire alarm system ensures safety by providing real-time alerts through SMS and automated audio calls.
+                                </p>
+                                <div className="grid md:grid-cols-3 gap-6 mt-8">
+                                    <div className="text-center p-6 bg-slate-900/50 rounded-xl border border-blue-500/10">
+                                        <div className="text-3xl font-bold text-cyan-400 mb-2">100%</div>
+                                        <div className="text-gray-400">Hands-Free</div>
+                                    </div>
+                                    <div className="text-center p-6 bg-slate-900/50 rounded-xl border border-blue-500/10">
+                                        <div className="text-3xl font-bold text-cyan-400 mb-2">24/7</div>
+                                        <div className="text-gray-400">Monitoring</div>
+                                    </div>
+                                    <div className="text-center p-6 bg-slate-900/50 rounded-xl border border-blue-500/10">
+                                        <div className="text-3xl font-bold text-cyan-400 mb-2">Instant</div>
+                                        <div className="text-gray-400">Alerts</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="team" className="py-20 px-6 bg-slate-900/50">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="text-center mb-16">
+                                <div className="flex items-center justify-center space-x-3 mb-4">
+                                    <Users size={40} className="text-cyan-400" />
+                                    <h2 className="text-4xl md:text-5xl font-bold text-white">Our Team</h2>
+                                </div>
+                                <p className="text-gray-400 text-lg">
+                                    Meet the dedicated team behind TekNO-FEV-C25
+                                </p>
+                            </div>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6 justify-items-center">
+                                <div className="team-card w-full max-w-xs bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-blue-500/20 hover:border-cyan-400/60 transition-all text-center">
+                                    <div className="team-img-wrapper w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center overflow-hidden relative">
+                                        <img src="Pictures/Joemar.png" alt="Joemar" className="w-full h-full object-cover" />
+                                        <span className="text-white text-4xl font-bold" style={{display: 'none'}}>TM1</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-2">Joemar Valledor</h3>
+                                    <p className="text-cyan-400 mb-2">Frontend Developer / UI Designer</p>
+                                    <p className="text-gray-400 text-sm">
+                                        Created user interface components and improved website visual design.
+                                   </p>
+
+                                </div>
+                                <div className="team-card w-full max-w-xs bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-blue-500/20 hover:border-cyan-400/60 transition-all text-center">
+                                    <div className="team-img-wrapper w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center overflow-hidden relative">
+                                        <img src="Pictures/Jacob.png" alt="Jacob" className="w-full h-full object-cover" />
+                                        <span className="text-white text-4xl font-bold" style={{display: 'none'}}>TM2</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-2">Jacob Jose Miranda</h3>
+                                    <p className="text-cyan-400 mb-2">Frontend Developer / UI Designer</p>
+                                    <p className="text-gray-400 text-sm">
+                                         Created user interface components and improved website visual design.
+                                    </p>
+                                </div>
+                                <div className="team-card w-full max-w-xs bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-blue-500/20 hover:border-cyan-400/60 transition-all text-center">
+                                    <div className="team-img-wrapper w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center overflow-hidden relative">
+                                        <img src="Pictures/Deo.png" alt="Deo" className="w-full h-full object-cover" />
+                                        <span className="text-white text-4xl font-bold" style={{display: 'none'}}>TM3</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-2">Angelo Deo Pita</h3>
+                                    <p className="text-cyan-400 mb-2">Content Manager / Presentation Specialist</p>
+                                    <p className="text-gray-400 text-sm">
+                                Prepared content, presentation materials, and assisted in system demonstrations.
+                                   </p>
+
+
+                                </div>
+                                <div className="team-card w-full max-w-xs bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-blue-500/20 hover:border-cyan-400/60 transition-all text-center">
+                                    <div className="team-img-wrapper w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center overflow-hidden relative">
+                                        <img src="Pictures/Justine.png" alt="Justine" className="w-full h-full object-cover" />
+                                        <span className="text-white text-4xl font-bold" style={{display: 'none'}}>TM4</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-2">Justine Gamo</h3>
+                                    <p className="text-cyan-400 mb-2">Project Leader / Full-Stack Developer</p>
+                                    <p className="text-gray-400 text-sm">
+                                        Led team operations and developed core frontend and backend system features.
+                                    </p>
+                                </div>
+                                <div className="team-card w-full max-w-xs bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-blue-500/20 hover:border-cyan-400/60 transition-all text-center">
+                                    <div className="team-img-wrapper w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center overflow-hidden relative">
+                                        <img src="Pictures/Jack.png" alt="Jack" className="w-full h-full object-cover" />
+                                        <span className="text-white text-4xl font-bold" style={{display: 'none'}}>TM5</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-2">Jacky Corpuz</h3>
+                                    <p className="text-cyan-400 mb-2">System Analyst / Researcher</p>
+                                    <p className="text-gray-400 text-sm">
+                                        Analyzes user needs, assists with SRS, RRL, methodology, diagrams, and presentation flow.
+                                    </p>
+                                </div>
+
+                                <div className="team-card w-full max-w-xs bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-blue-500/20 hover:border-cyan-400/60 transition-all text-center">
+                                    <div className="team-img-wrapper w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center overflow-hidden relative">
+                                        <img src="Pictures/Jade.png" alt="Jade" className="w-full h-full object-cover" />
+                                        <span className="text-white text-4xl font-bold" style={{display: 'none'}}>TM6</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-2">Jade Wania</h3>
+                                    <p className="text-cyan-400 mb-2">QA Tester / Documentation Assistant</p>
+                                    <p className="text-gray-400 text-sm">
+                                    Tested system features, identified bugs, and supported documentation writing.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer className="py-12 px-6 border-t border-blue-500/20">
+                        <div className="max-w-7xl mx-auto text-center">
+                            <div className="flex items-center justify-center space-x-3 mb-4">
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                                    <Zap size={24} className="text-white" />
+                                </div>
+                                <span className="text-2xl font-bold text-white">TekNO-FEV-C25</span>
+                            </div>
+                            <p className="text-gray-400 mb-2"></p>
+                            <p className="text-gray-500 text-sm">
+                                Automatic Voice Command & Fire Alarm System
+                            </p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<TeknoFevWebsite />);
+    </script>
+</body>
+</html>
